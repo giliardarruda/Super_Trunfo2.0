@@ -5,12 +5,26 @@
 #define TAM_CODIGO 10
 #define TAM_NOME 100
 
+// Função para imprimir população com separador de milhar (ex: 12.300.000)
+void imprimirPopulacaoFormatada(unsigned long int valor) {
+    char buffer[30];
+    sprintf(buffer, "%lu", valor);
+    int len = strlen(buffer);
+
+    for (int i = 0; i < len; i++) {
+        putchar(buffer[i]);
+        if ((len - i - 1) % 3 == 0 && i != len - 1) {
+            printf(".");
+        }
+    }
+}
+
 int main() {
     setlocale(LC_ALL, "pt_BR.UTF-8");
 
     char buffer[100];
 
-    // --------- Dados da Carta 1 ---------
+    // ---------------- Carta 1 ----------------
     char estado1;
     char codigo1[TAM_CODIGO];
     char nomeCidade1[TAM_NOME];
@@ -49,11 +63,10 @@ int main() {
     fgets(buffer, sizeof(buffer), stdin);
     sscanf(buffer, "%d", &pontosTuristicos1);
 
-    // Cálculo dos indicadores
     densidade1 = populacao1 / area1;
-    pibPerCapita1 = (pib1 * 1e9) / populacao1;
+    pibPerCapita1 = (pib1 * 1000000000.0f) / populacao1;
 
-    // --------- Dados da Carta 2 ---------
+    // ---------------- Carta 2 ----------------
     char estado2;
     char codigo2[TAM_CODIGO];
     char nomeCidade2[TAM_NOME];
@@ -92,16 +105,19 @@ int main() {
     fgets(buffer, sizeof(buffer), stdin);
     sscanf(buffer, "%d", &pontosTuristicos2);
 
-    // Cálculo dos indicadores
     densidade2 = populacao2 / area2;
-    pibPerCapita2 = (pib2 * 1e9) / populacao2;
+    pibPerCapita2 = (pib2 * 1000000000.0f) / populacao2;
 
-    // --------- Comparação ---------
-    // Aqui você pode trocar o atributo usado na comparação
-    printf("\nComparação de Cartas (Atributo: População):\n\n");
+    // ---------------- Comparação de Cartas ----------------
+    printf("\nComparação de cartas (Atributo: População):\n\n");
 
-    printf("Carta 1 - %s (%c): %lu habitantes\n", nomeCidade1, estado1, populacao1);
-    printf("Carta 2 - %s (%c): %lu habitantes\n", nomeCidade2, estado2, populacao2);
+    printf("Carta 1 - %s (%c): ", nomeCidade1, estado1);
+    imprimirPopulacaoFormatada(populacao1);
+    printf("\n");
+
+    printf("Carta 2 - %s (%c): ", nomeCidade2, estado2);
+    imprimirPopulacaoFormatada(populacao2);
+    printf("\n");
 
     if (populacao1 > populacao2) {
         printf("\nResultado: Carta 1 (%s) venceu!\n", nomeCidade1);
