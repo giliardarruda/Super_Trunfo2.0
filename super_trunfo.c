@@ -182,22 +182,49 @@ int main() {
             }
         }
 
-        // Comparações
-        int pontos_c1 = 0, pontos_c2 = 0;
-
-        pontos_c1 += (opcao1 == 5) ? (valor1_c1 < valor1_c2) : (valor1_c1 > valor1_c2);
-        pontos_c2 += (opcao1 == 5) ? (valor1_c2 < valor1_c1) : (valor1_c2 > valor1_c1);
-
-        pontos_c1 += (opcao2 == 5) ? (valor2_c1 < valor2_c2) : (valor2_c1 > valor2_c2);
-        pontos_c2 += (opcao2 == 5) ? (valor2_c2 < valor2_c1) : (valor2_c2 > valor2_c1);
-
+        // Comparações - vamos utilizar a soma dos valores para determinar o vencedor
+        // como está sendo feito na parte de exibição do resultado
         float soma1 = valor1_c1 + valor2_c1;
         float soma2 = valor1_c2 + valor2_c2;
 
         printf("\n--- Resultado da Comparação ---\n");
-        printf("%s: %.2f + %.2f = %.2f\n", nomeCidade1, valor1_c1, valor2_c1, soma1);
-        printf("%s: %.2f + %.2f = %.2f\n", nomeCidade2, valor1_c2, valor2_c2, soma2);
+        
+        // Formatação correta para os valores
+        printf("%s: ", nomeCidade1);
+        if (opcao1 == 1) {
+            imprimirPopulacaoFormatada((unsigned long int)valor1_c1);
+            printf(" + ");
+        } else {
+            printf("%.2f + ", valor1_c1);
+        }
+        
+        if (opcao2 == 1) {
+            imprimirPopulacaoFormatada((unsigned long int)valor2_c1);
+            printf(" = ");
+        } else {
+            printf("%.2f = ", valor2_c1);
+        }
+        
+        printf("%.2f\n", soma1);
+        
+        printf("%s: ", nomeCidade2);
+        if (opcao1 == 1) {
+            imprimirPopulacaoFormatada((unsigned long int)valor1_c2);
+            printf(" + ");
+        } else {
+            printf("%.2f + ", valor1_c2);
+        }
+        
+        if (opcao2 == 1) {
+            imprimirPopulacaoFormatada((unsigned long int)valor2_c2);
+            printf(" = ");
+        } else {
+            printf("%.2f = ", valor2_c2);
+        }
+        
+        printf("%.2f\n", soma2);
 
+        // Verifica e exibe o vencedor corretamente
         if (soma1 > soma2) {
             printf("\nVencedora: %s!\n", nomeCidade1);
         } else if (soma2 > soma1) {
